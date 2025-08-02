@@ -117,7 +117,7 @@
     @apply mt-2 text-justify text-xl text-light-100;
   }
 
-  .book-overview_btn {
+  .book-overview-btn {
     @apply mt-4 min-h-14 w-fit bg-primary text-dark-100 hover:bg-primary/90 max-md:w-full !important;
   }
 
@@ -248,7 +248,7 @@
   }
 
   .auth-box {
-    @apply gradient-vertical mx-auto flex max-w-xl flex-col gap-6 rounded-lg p-10;
+    @apply gradient-vertical mx-auto flex max-w-4xl flex-col gap-6 rounded-lg p-10;
   }
 
   .auth-illustration {
