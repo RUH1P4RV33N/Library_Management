@@ -28,7 +28,6 @@ const ImageUpload = ({onFileChange}:{onFileChange:(filePath:string)=>void}) => {
     console.log(error);
     toast("Image Upload Failed", {
       description: `your image could not be uploaded. Please try again later`,
-      variant: 'destructive',
 
     })
   }

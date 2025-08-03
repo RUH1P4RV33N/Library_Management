@@ -1,9 +1,10 @@
 "use client"
 import React from "react";
-
+import {toast} from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod"
-import { DefaultValues,FieldValues,useForm,UseFormReturn,SubmitHandler } from "react-hook-form"
+import { DefaultValues,FieldValues,useForm,UseFormReturn,SubmitHandler,Path } from "react-hook-form"
 import {ZodType,z} from "zod"
+import {useRouter} from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,7 +19,6 @@ import ImageUpload from "@/components/ImageUpload";
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import {FIELD_NAMES,FIELD_TYPES} from "@/constants";
-import * as Path from "node:path";
 
 interface Props <T extends FieldValues>{
   schema:ZodType<T>;
@@ -32,6 +32,7 @@ const AuthForm= <T extends FieldValues> ({
                                            defaultValues,
                                            OnSubmit}
                                          :Props<T>) => {
+  const router=useRouter()
   const isSignIn=type==="SIGN-IN"
   const form:UseFormReturn<T> = useForm({
     resolver: zodResolver(schema),
@@ -40,6 +41,18 @@ const AuthForm= <T extends FieldValues> ({
 
   // 2. Define a submit handler.
   const handleSubmit:SubmitHandler<T>=async(data)=>{
+    const result=await OnSubmit(data)
+    if(result.success) {
+      toast("Signed in successfully",{
+        description:isSignIn?"You have been signed in successfully":"You have been signed up successfully",
+      });
+      router.push("/");
+    }
+    else {
+      toast(`Error is ${isSignIn?"signing in":"signing up"}`,{
+        description:`${result.error}`,
+      });
+    }
 
   }
   return (
@@ -49,12 +62,12 @@ const AuthForm= <T extends FieldValues> ({
       </h1>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-full">
-        {Object.keys(defaultValues).map((key) => (
+        {Object.keys(defaultValues).map((field) => (
 
             <FormField
-              key={key}
+              key={field}
               control={form.control}
-              name={key as keyof T}
+              name={field as Path<T>}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="capitalize">{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}</FormLabel>
