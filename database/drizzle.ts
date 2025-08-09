@@ -5,5 +5,5 @@ import config  from "@/lib/config";
 
 // or .env.local
 
-const sql = neon(config.env.datsbaseUrl);
+const sql = neon(config.env.databaseUrl);
 export const db = drizzle({ client: sql });
