@@ -7,7 +7,8 @@ import { signIn } from "@/auth";
 import { headers } from "next/headers";
 import ratelimit  from "@/lib/ratelimit" ;
 import { redirect } from "next/navigation";
-
+import config from "@/lib/config";
+import { workflowClient } from "@/lib/workflow";
 export const signInWithCredentials=async(params:Pick<AuthCredentials,"email"|"password">)=>
 {
     const {email,password}=params;
@@ -33,6 +34,7 @@ export const signInWithCredentials=async(params:Pick<AuthCredentials,"email"|"pa
     }
 }
 export const signUp=async(params:AuthCredentials)=> {
+
     const {fullName,email,universityId,universityCard,password}=params;
 
     const ip=(await headers()).get('x-forwarded-for')||"127.0.0.1";
@@ -52,6 +54,13 @@ export const signUp=async(params:AuthCredentials)=> {
             universityId,
             universityCard,
             password:hashedPassword});
+        // await workflowClient.trigger({
+        //     url:`${config.env.prodApiEndpoint}/api/workflow/onboarding`,
+        //     body: {
+        //         email,
+        //         fullName
+        //     }
+        // })
         await signInWithCredentials({email,password});
         return {success:true,message:"User created successfully"}
     }

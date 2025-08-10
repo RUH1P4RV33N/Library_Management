@@ -1,6 +1,7 @@
 const config = {
   env: {
     apiEndpoint: process.env.NEXT_PUBLIC_API_ENDPOINT!,
+    prodApiEndpoint: process.env.NEXT_PUBLIC_PROD_API_ENDPOINT!,
     imagekit: {
       publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
       urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
@@ -12,7 +13,10 @@ const config = {
       redisToken: process.env.UPSTASH_REDIS_TOKEN!,
       qstashUrl: process.env.QSTASH_URL!,
       qstashToken: process.env.QSTASH_TOKEN!,
-    }
+    },
+    emailjsServiceId: process.env.EMAILJS_SERVICE_ID!, // e.g. service_5bejxor
+    emailjsTemplateId: process.env.EMAILJS_TEMPLATE_ID!, // e.g. template_abcd123
+    emailjsPublicKey: process.env.EMAILJS_PUBLIC_KEY!,   // Your EmailJS Public Key
   },
 };
 
