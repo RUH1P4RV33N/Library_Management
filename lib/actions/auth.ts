@@ -54,13 +54,13 @@ export const signUp=async(params:AuthCredentials)=> {
             universityId,
             universityCard,
             password:hashedPassword});
-        // await workflowClient.trigger({
-        //     url:`${config.env.prodApiEndpoint}/api/workflow/onboarding`,
-        //     body: {
-        //         email,
-        //         fullName
-        //     }
-        // })
+        await workflowClient.trigger({
+            url:`${config.env.prodApiEndpoint}/api/workflow/onboarding`,
+            body: {
+                email,
+                fullName
+            }
+        })
         await signInWithCredentials({email,password});
         return {success:true,message:"User created successfully"}
     }
