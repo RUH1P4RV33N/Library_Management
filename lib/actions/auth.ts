@@ -60,7 +60,7 @@ export const signUp=async(params:AuthCredentials)=> {
                 email,
                 fullName
             }
-        })
+        });
         await signInWithCredentials({email,password});
         return {success:true,message:"User created successfully"}
     }
