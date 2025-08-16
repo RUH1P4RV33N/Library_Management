@@ -18,7 +18,7 @@ export const sendEmail = async ({
 }) => {
     try {
         await workflowClient.publishJSON({
-            url: `${config.env.prodApiEndpoint}/api/send-email-queue`,
+            url: `${config.env.prodApiEndpoint}api/send-email-queue`,
             body: { email, name, subject, text },
             headers: {
                 "Content-Type": "application/json",
