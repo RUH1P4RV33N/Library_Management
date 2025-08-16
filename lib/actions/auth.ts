@@ -55,7 +55,7 @@ export const signUp=async(params:AuthCredentials)=> {
             universityCard,
             password:hashedPassword});
         await workflowClient.publishJSON({
-            url:`${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+            url:`${config.env.prodApiEndpoint}/api/workflows/send-email-queue`,
             body: {
                 email,
                 fullName
