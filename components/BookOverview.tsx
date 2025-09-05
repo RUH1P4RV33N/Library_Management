@@ -2,17 +2,42 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import BookCover from "@/components/BookCover";
-const BookOverview = ({
+import BorrowBook from "@/components/BorrowBook";
+import { db } from "@/database/drizzle";
+import { users } from "@/database/schema";
+import { eq } from "drizzle-orm";
+
+interface Props extends Books {
+
+  userId: string;
+}
+const BookOverview =async ({
   title,
   author,
   genre,
   rating,
-  total_copies,
-  available_copies,
+  totalCopies,
+  availableCopies,
   description,
-  color,
-  cover,
-}:Books)=> {
+  coverColor,
+  coverUrl,
+    id,
+    userId,
+}:Props)=> {
+  const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+
+  const borrowingEligibility = {
+    isEligible: availableCopies > 0 && user?.status === "APPROVED",
+    message:
+        availableCopies <= 0
+            ? "Book is not available"
+            : "You are not eligible to borrow this book",
+  };
+
   return (
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
@@ -31,32 +56,29 @@ const BookOverview = ({
         </div>
         <div className="book-copies">
           <p>
-            Total Copies: <span className="font-semibold text-light-200">{total_copies}</span>
+            Total Copies: <span className="font-semibold text-light-200">{totalCopies}</span>
           </p>
           <p>
             Available Copies:{" "}
-            <span className="font-semibold text-light-200">{available_copies}</span>
+            <span className="font-semibold text-light-200">{availableCopies}</span>
           </p>
         </div>
         <p className="book-description">{description}</p>
-        <Button className="book-overview-btn">
-          <Image src="/icons/book.svg" alt="book" width={22} height={22}/>
-          <p className="font-bebas-neue text-xl text-dark-100">Borrow Book</p>
-        </Button>
+        <BorrowBook bookId={id} userId={userId} borrowingEligibility={borrowingEligibility}/>
         </div>
       <div className="relative flex flex-1 justify-center">
         <div className="relative">
           <BookCover
             className="z-10"
             variant="wide"
-            coverColor={color}
-            coverImage={cover}/>
+            coverColor={coverColor}
+            coverImage={coverUrl}/>
           <div className="absolute -left-16 top-10 rotate-12 opacity-40 max:sm:hidden">
             <BookCover
               className="z-10"
               variant="wide"
-              coverColor={color}
-              coverImage={cover}/>
+              coverColor={coverColor}
+              coverImage={coverUrl}/>
           </div>
 
         </div>

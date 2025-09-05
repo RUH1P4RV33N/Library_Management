@@ -8,6 +8,20 @@
       "when": 1754217721732,
       "tag": "0000_puzzling_scarecrow",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1756716934096,
+      "tag": "0001_smart_unicorn",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757071140676,
+      "tag": "0002_daily_kang",
+      "breakpoints": true
     }
   ]
 }

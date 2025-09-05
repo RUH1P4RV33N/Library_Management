@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import ImageUpload from "@/components/ImageUpload";
+import FileUpload from "@/components/FileUpload";
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import {FIELD_NAMES,FIELD_TYPES} from "@/constants";
@@ -73,7 +73,7 @@ const AuthForm= <T extends FieldValues> ({
                   <FormLabel className="capitalize">{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}</FormLabel>
                   <FormControl>
                     {field.name === "universityCard" ? (
-                      <ImageUpload onFileChange={field.onChange}/>
+                      <FileUpload type="image" accept='image/*' placeholder="Upload University Card" folder="universityCard" variant="dark" onFileChange={field.onChange}/>
                     ) : (
                       <Input
                         required
